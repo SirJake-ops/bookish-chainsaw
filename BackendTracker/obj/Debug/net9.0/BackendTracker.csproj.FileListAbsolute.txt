@@ -81,3 +81,4 @@ C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\obj\Debug\net9.0\rjim
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\obj\Debug\net9.0\BackendTracker.sourcelink.json

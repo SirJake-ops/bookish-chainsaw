@@ -1,4 +1,5 @@
-﻿using BackendTracker.Context;
+﻿using System.Diagnostics.CodeAnalysis;
+using BackendTracker.Context;
 using BackendTracker.Entities.ApplicationUser;
 using BackendTracker.Entities.Message;
 
@@ -8,16 +9,43 @@ public class Query()
 {
     public string Hello() => "Hello From Graph";
 
-    public IEnumerable<Conversation>? GetConversations([Service] ApplicationContext context, Guid conversationId) =>
+    public IEnumerable<Conversation>? GetConversations([Service] ApplicationContext context) =>
         context.Conversations.ToList();
 
-    public ApplicationUser CreateUser([Service] ApplicationContext context)
+    public ApplicationUser? CreateUser([Service] ApplicationContext context,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
+        string userName,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
+        string email,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
+        string password,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
+        string role)
     {
-        ApplicationUser applicationUser = new ApplicationUser();
-        context.ApplicationUsers.Add(applicationUser);
-        return applicationUser;
+        ApplicationUser applicationUser = new ApplicationUser
+        {
+            Id = Guid.NewGuid(),
+            UserName = userName,
+            Email = email,
+            Password = password,
+            Role = role,
+            RefreshToken = "",
+            RefreshTokenExpiryTime = DateTime.Now.AddHours(24),
+            LastLoginTime = DateTime.Now,
+            IsOnline = false
+        };
+        try
+        {
+            context.ApplicationUsers.Add(applicationUser);
+            return applicationUser;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
-    
+
     public IEnumerable<ApplicationUser> GetUsers([Service] ApplicationContext context, Guid userId) =>
         context.ApplicationUsers.ToList();
 

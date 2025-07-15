@@ -160,3 +160,4 @@ C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerTest\bin\Debug\net9.0\
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerTest\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerTest\bin\Debug\net9.0\Yarp.ReverseProxy.dll
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerTest\bin\Debug\net9.0\runtimes\win\lib\net8.0\System.Runtime.Caching.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTrackerTest\obj\Debug\net9.0\BackendTrackerTest.sourcelink.json
