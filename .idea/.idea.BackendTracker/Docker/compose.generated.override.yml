@@ -1,0 +1,21 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  backendtracker:
+    build:
+      context: "C:\\Users\\jake2\\RiderProjects\\BackendTracker"
+      dockerfile: "BackendTracker/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net9.0/BackendTracker.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "backendtracker:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\jake2\\RiderProjects\\BackendTracker\\BackendTracker:/app:rw"
+    - "C:\\Users\\jake2\\RiderProjects\\BackendTracker:/src:rw"
+    - "C:\\Users\\jake2\\.nuget\\packages:/home/app/.nuget/packages"
+    working_dir: "/app"
