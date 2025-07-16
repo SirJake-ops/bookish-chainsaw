@@ -1,6 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using BackendTracker.Entities.ApplicationUser;
+﻿using BackendTracker.Entities.ApplicationUser;
 using BackendTracker.Entities.Message;
+using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendTracker.Context;
@@ -9,7 +9,6 @@ public class ApplicationContext : DbContext
 {
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
-        DotNetEnv.Env.Load();
     }
 #pragma warning restore IL3050
 
@@ -17,12 +16,13 @@ public class ApplicationContext : DbContext
     {
         if (!optionsBuilder.IsConfigured)
         {
-            var username = Environment.GetEnvironmentVariable("POSTGRES_USER");
-            var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD");
-            optionsBuilder.UseNpgsql($"Host=localhost;Database=BackendTracker;Username={username};Password={password}");
+            var username = Environment.GetEnvironmentVariable("POSTGRES_USER_DEV");
+            // var username = "postgres";
+            var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD_DEV");
+            // var password = "postgres";
+            optionsBuilder.UseNpgsql(
+                $"Host=localhost;Port=5432;Database=tracker;Username={username};Password={password}");
         }
-
-        base.OnConfiguring(optionsBuilder);
     }
 
     public DbSet<ApplicationUser> ApplicationUsers { get; set; }

@@ -6,10 +6,13 @@
       dockerfile: BackendTracker/Dockerfile
     depends_on:
       - postgres
-      
+  
   postgres:
     image: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB_NAME: tracker
+    ports:
+      - "5432:5432"
 

@@ -157,37 +157,49 @@
               "target": "Package",
               "version": "[8.2.1, )"
             },
+            "HotChocolate": {
+              "target": "Package",
+              "version": "[15.1.7, )"
+            },
             "HotChocolate.AspNetCore": {
               "target": "Package",
-              "version": "[14.2.0, )"
+              "version": "[15.1.7, )"
             },
-            "Microsoft.DotNet.ILCompiler": {
-              "suppressParent": "All",
+            "HotChocolate.Data": {
               "target": "Package",
-              "version": "[9.0.0, )",
-              "autoReferenced": true
+              "version": "[15.1.7, )"
+            },
+            "HotChocolate.Data.EntityFramework": {
+              "target": "Package",
+              "version": "[15.1.7, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.7, )"
             },
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.7, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[9.0.0, )"
+              "version": "[9.0.7, )"
             },
-            "Microsoft.NET.ILLink.Tasks": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[9.0.6, )",
-              "autoReferenced": true
+              "version": "[9.0.7, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[9.0.1, )"
+              "version": "[9.0.2, )"
             }
           },
           "imports": [
@@ -201,12 +213,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "runtime.win-x64.Microsoft.DotNet.ILCompiler",
-              "version": "[9.0.0, 9.0.0]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
