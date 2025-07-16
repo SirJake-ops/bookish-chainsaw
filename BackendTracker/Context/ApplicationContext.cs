@@ -1,6 +1,5 @@
 ﻿using BackendTracker.Entities.ApplicationUser;
 using BackendTracker.Entities.Message;
-using DotNetEnv;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackendTracker.Context;
@@ -17,9 +16,7 @@ public class ApplicationContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             var username = Environment.GetEnvironmentVariable("POSTGRES_USER_DEV");
-            // var username = "postgres";
             var password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD_DEV");
-            // var password = "postgres";
             optionsBuilder.UseNpgsql(
                 $"Host=localhost;Port=5432;Database=tracker;Username={username};Password={password}");
         }

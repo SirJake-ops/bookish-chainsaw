@@ -16,7 +16,6 @@ public class Program
         builder.Services.AddPooledDbContextFactory<ApplicationContext>(options =>
             options.UseNpgsql(
                 $"Host=localhost;Port=5432;Database={Environment.GetEnvironmentVariable("POSTGRES_DB_NAME_DEV")};Username={Environment.GetEnvironmentVariable("POSTGRES_USERNAME_DEV")};Password={Environment.GetEnvironmentVariable("POSTGRES_PASSWORD_DEV")}"));
-        // "Host=localhost;Port=5432;Database=tracker;Username=postgres;Password=postgres"));
 
 
         builder.Services.AddGraphQLServer()

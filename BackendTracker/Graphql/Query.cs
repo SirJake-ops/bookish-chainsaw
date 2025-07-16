@@ -42,7 +42,7 @@ public class Query
 public class Mutation
 {
     private readonly IDbContextFactory<ApplicationContext> _contextFactory;
-    
+
     public Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
     {
         _contextFactory = dbContextFactory;
@@ -82,12 +82,14 @@ public class Mutation
                 IsOnline = false
             };
 
-            applicationUser.Password = hasher.HashPassword(applicationUser, user.Password ?? throw new InvalidOperationException("Password cannot be null"));
+            applicationUser.Password = hasher.HashPassword(applicationUser,
+                user.Password ?? throw new InvalidOperationException("Password cannot be null"));
 
             context.ApplicationUsers.Add(applicationUser);
             await context.SaveChangesAsync();
             return applicationUser;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             Console.WriteLine(e);
             throw;
