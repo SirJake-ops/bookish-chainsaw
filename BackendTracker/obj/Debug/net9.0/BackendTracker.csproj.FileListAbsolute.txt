@@ -187,3 +187,4 @@ C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\Micr
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt

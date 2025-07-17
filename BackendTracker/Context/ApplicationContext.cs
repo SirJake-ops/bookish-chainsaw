@@ -22,7 +22,7 @@ public class ApplicationContext : DbContext
         }
     }
 
-    public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+    public DbSet<ApplicationUser?> ApplicationUsers { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<Conversation> Conversations { get; set; }
 }

@@ -7,12 +7,6 @@ namespace BackendTrackerTest;
 public class EntitiesTests
 {
     [Fact]
-    public void Test1()
-    {
-        Assert.True(true);
-    }
-
-    [Fact]
     public void CanAddAndRetrieveApplicationUser()
     {
         var options = new DbContextOptionsBuilder<ApplicationContext>()
@@ -30,18 +24,14 @@ public class EntitiesTests
             };
 
             context.ApplicationUsers.Add(user);
-            
+
             context.SaveChanges();
-            
+
             var fetchedUser = context.ApplicationUsers.Find(user.Id);
 
             Assert.NotNull(fetchedUser);
             Assert.Equal(user, fetchedUser);
             Assert.Equal(user.UserName, fetchedUser.UserName);
-            
         }
-        
     }
-    
-    
 }
