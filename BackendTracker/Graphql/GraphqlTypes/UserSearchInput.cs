@@ -1,4 +1,4 @@
-﻿namespace BackendTracker.GraphQueries.GraphqlTypes;
+﻿namespace BackendTracker.Graphql.GraphqlTypes;
 
 public class UserSearchInput
 {
