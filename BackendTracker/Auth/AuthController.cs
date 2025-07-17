@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
 
     private string GenerateJwtToken(ApplicationUser user)
     {
-        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]);
+        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!);
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
