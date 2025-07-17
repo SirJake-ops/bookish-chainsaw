@@ -1,8 +1,12 @@
+using System.Text;
 using BackendTracker.Context;
 using BackendTracker.Entities.Message;
+using BackendTracker.Graphql;
 using BackendTracker.GraphQueries;
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BackendTracker;
 
@@ -27,8 +31,25 @@ public class Program
         builder.Services.AddScoped<Mutation>();
         builder.Services.AddScoped<Query>();
 
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                };
+            });
+        
+        builder.Services.AddAuthorization();
+
         var app = builder.Build();
 
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.MapGraphQL();
 
         app.Run();

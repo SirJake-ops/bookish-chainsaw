@@ -2,10 +2,11 @@
 using BackendTracker.Entities.ApplicationUser;
 using BackendTracker.Entities.Message;
 using BackendTracker.GraphQueries.GraphqlTypes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace BackendTracker.GraphQueries;
+namespace BackendTracker.Graphql;
 
 /**
  * TODO: Move the methods that are altering data to a new Mutation class Below
@@ -21,6 +22,7 @@ public class Query
 
     public string Hello() => "Hello From Graph";
 
+    [Authorize]
     public async Task<IEnumerable<Conversation>> GetConversations(Guid userId) =>
         await context.Conversations
             .Where(m => m.InitialReceiverId == userId || m.InitialSenderId == userId)
@@ -32,6 +34,7 @@ public class Query
             .Where(m => m.Id == userId)
             .FirstOrDefaultAsync();
 
+    [Authorize]
     public async Task<IEnumerable<Message>> GetMessages(Guid userId) =>
         await context.Messages
             .Where(m => m.ReceiverId == userId && m.SenderId == userId)
