@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace BackendTrackerTest.GrahpqlTests;
 
 
-public class MutationTestFixture
+public class MutationTestFixture : IDisposable
 {
    public readonly IDbContextFactory<ApplicationContext> ContextFactory;
    
@@ -26,7 +26,13 @@ public class MutationTestFixture
       
       SeedTestData();
    }
-   
+
+   public void Dispose()
+   {
+       using var context = ContextFactory.CreateDbContext();
+        context.Database.EnsureDeleted();
+   }
+
    private void SeedTestData()
    {
       using var context = ContextFactory.CreateDbContext();

@@ -2,13 +2,14 @@
 using BackendTracker.Entities.ApplicationUser;
 using BackendTracker.Entities.Message;
 using BackendTracker.Graphql;
+using BackendTracker.Graphql.GraphqlTypes;
 using BackendTracker.GraphQueries.GraphqlTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BackendTrackerTest.GrahpqlTests;
 
-public class QueryTestFixture
+public class QueryTestFixture : IDisposable
 {
     public readonly IDbContextFactory<ApplicationContext> ContextFactory;
 
@@ -21,6 +22,12 @@ public class QueryTestFixture
         });
         ContextFactory = services.BuildServiceProvider().GetRequiredService<IDbContextFactory<ApplicationContext>>();
         SeedTestData();
+    }
+
+    public void Dispose()
+    {
+        using var context = ContextFactory.CreateDbContext();
+        context.Database.EnsureDeleted();
     }
 
     private void SeedTestData()

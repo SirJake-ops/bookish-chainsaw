@@ -1,6 +1,7 @@
 ﻿using BackendTracker.Context;
 using BackendTracker.Entities.ApplicationUser;
 using BackendTracker.Entities.Message;
+using BackendTracker.Graphql.GraphqlTypes;
 using BackendTracker.GraphQueries.GraphqlTypes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
