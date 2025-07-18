@@ -43,11 +43,13 @@ public class Program
                     ValidateAudience = false,
                 };
             });
-        
+
+        builder.Services.AddControllers();
         builder.Services.AddAuthorization();
 
         var app = builder.Build();
 
+        app.MapControllers();
         app.UseAuthentication();
         app.UseAuthorization();
         app.MapGraphQL();

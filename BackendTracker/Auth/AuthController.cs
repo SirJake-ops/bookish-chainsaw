@@ -14,10 +14,10 @@ namespace BackendTracker.Auth;
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly ApplicationContext _applicationContext;
+    private readonly IDbContextFactory<ApplicationContext> _applicationContext;
     private readonly IConfiguration _configuration;
 
-    public AuthController(ApplicationContext applicationContext, IConfiguration configuration)
+    public AuthController(IDbContextFactory<ApplicationContext> applicationContext, IConfiguration configuration)
     {
         _applicationContext = applicationContext;
         _configuration = configuration;
@@ -26,7 +26,9 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
     {
-        var user = await _applicationContext.ApplicationUsers.FirstOrDefaultAsync(user =>
+        using var context = await _applicationContext.CreateDbContextAsync();
+
+        var user = await context.ApplicationUsers.FirstOrDefaultAsync(user =>
             user.UserName == loginRequest.UserName)!;
         if (user == null) return Unauthorized("Invalid username.");
 
