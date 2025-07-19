@@ -12,14 +12,9 @@ namespace BackendTracker.Graphql;
 /**
  * TODO: Move the methods that are altering data to a new Mutation class Below
  */
-public class Query
+public class Query(IDbContextFactory<ApplicationContext> dbContextFactory)
 {
-    private readonly ApplicationContext context;
-
-    public Query(IDbContextFactory<ApplicationContext> dbContextFactory)
-    {
-        context = dbContextFactory.CreateDbContext();
-    }
+    private readonly ApplicationContext context = dbContextFactory.CreateDbContext();
 
     public string Hello() => "Hello From Graph";
 

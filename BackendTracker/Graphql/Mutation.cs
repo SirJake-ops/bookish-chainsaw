@@ -6,19 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BackendTracker.Graphql;
 
-public class Mutation
+public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
 {
-    private readonly IDbContextFactory<ApplicationContext> _contextFactory;
-
-    public Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
-    {
-        _contextFactory = dbContextFactory;
-    }
-
-
     public async Task<ApplicationUser?> CreateUser(ApplicationUserInput user)
     {
-        await using var context = _contextFactory.CreateDbContext();
+        await using var context = await dbContextFactory.CreateDbContextAsync();
         try
         {
             var hasher = new PasswordHasher<ApplicationUser?>();

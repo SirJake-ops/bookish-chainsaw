@@ -4,16 +4,12 @@ using BackendTracker;
 using BackendTracker.Auth;
 using BackendTrackerTest.IntegrationTests.IntegrationTestSetup;
 
-namespace BackendTrackerTest.IntegrationTests;
+namespace BackendTrackerTest.IntegrationTests.Auth;
 
-public class AuthIntegrationTests : IClassFixture<BackendTrackerFactory<Program>>
+public class AuthIntegrationTests(BackendTrackerFactory<Program> factory)
+    : IClassFixture<BackendTrackerFactory<Program>>
 {
-    private readonly HttpClient _client;
-
-    public AuthIntegrationTests(BackendTrackerFactory<Program> factory)
-    {
-        _client = factory.CreateClient();
-    }
+    private readonly HttpClient _client = factory.CreateClient();
 
     [Fact]
     public async Task Login_ShouldReturnTokenWhenUserIsValid()

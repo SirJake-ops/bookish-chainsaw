@@ -1,10 +1,12 @@
 ﻿using BackendTracker.Context;
 using BackendTracker.Entities.ApplicationUser;
+using BackendTracker.Ticket.FileUpload;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Environment = BackendTracker.Ticket.Environment;
 
 namespace BackendTrackerTest.IntegrationTests.IntegrationTestSetup;
 
@@ -51,7 +53,25 @@ public class BackendTrackerFactory<TStartup> : WebApplicationFactory<TStartup> w
 
         user.Password = hasher.HashPassword(user, "123abc");
 
+        var ticket = new BackendTracker.Ticket.Ticket
+        {
+            TicketId = Guid.NewGuid(),
+            Title = "Test Ticket",
+            Description = "This is a test ticket.",
+            SubmitterId = user.Id,
+            AssigneeId = user.Id,
+            Environment = Environment.Browser,
+            StepsToReproduce = "1. Do this\n2. Do that then do this again but with some more pizzazz",
+            ExpectedResult = "Expected result is this the computer will blow up!",
+            Files = new List<TicketFile>(),
+            Submitter = user,
+            Assignee = user,
+        };
+
+        user.AssignedTickets.Add(ticket);
+
         context.ApplicationUsers.Add(user);
+        context.Tickets.Add(ticket);
         context.SaveChanges();
     }
 }

@@ -3,6 +3,7 @@ using System;
 using BackendTracker.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendTracker.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20250718165413_TicketCreation")]
+    partial class TicketCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,7 +172,7 @@ namespace BackendTracker.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("TicketId")
+                    b.Property<Guid?>("TicketId")
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -227,10 +230,6 @@ namespace BackendTracker.Migrations
 
                     b.HasKey("TicketId");
 
-                    b.HasIndex("AssigneeId");
-
-                    b.HasIndex("SubmitterId");
-
                     b.ToTable("Tickets");
                 });
 
@@ -250,42 +249,16 @@ namespace BackendTracker.Migrations
 
             modelBuilder.Entity("BackendTracker.Ticket.FileUpload.TicketFile", b =>
                 {
-                    b.HasOne("BackendTracker.Ticket.Ticket", "Ticket")
+                    b.HasOne("BackendTracker.Ticket.Ticket", null)
                         .WithMany("Files")
-                        .HasForeignKey("TicketId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Ticket");
-                });
-
-            modelBuilder.Entity("BackendTracker.Ticket.Ticket", b =>
-                {
-                    b.HasOne("BackendTracker.Entities.ApplicationUser.ApplicationUser", "Assignee")
-                        .WithMany("AssignedTickets")
-                        .HasForeignKey("AssigneeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("BackendTracker.Entities.ApplicationUser.ApplicationUser", "Submitter")
-                        .WithMany("SubmittedTickets")
-                        .HasForeignKey("SubmitterId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Assignee");
-
-                    b.Navigation("Submitter");
+                        .HasForeignKey("TicketId");
                 });
 
             modelBuilder.Entity("BackendTracker.Entities.ApplicationUser.ApplicationUser", b =>
                 {
-                    b.Navigation("AssignedTickets");
-
                     b.Navigation("Conversations");
 
                     b.Navigation("Messages");
-
-                    b.Navigation("SubmittedTickets");
                 });
 
             modelBuilder.Entity("BackendTracker.Ticket.Ticket", b =>

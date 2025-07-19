@@ -12,21 +12,13 @@ namespace BackendTracker.Auth;
 
 [ApiController]
 [Route("api/auth")]
-public class AuthController : ControllerBase
+public class AuthController(IDbContextFactory<ApplicationContext> applicationContext, IConfiguration configuration)
+    : ControllerBase
 {
-    private readonly IDbContextFactory<ApplicationContext> _applicationContext;
-    private readonly IConfiguration _configuration;
-
-    public AuthController(IDbContextFactory<ApplicationContext> applicationContext, IConfiguration configuration)
-    {
-        _applicationContext = applicationContext;
-        _configuration = configuration;
-    }
-
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
     {
-        using var context = await _applicationContext.CreateDbContextAsync();
+        using var context = await applicationContext.CreateDbContextAsync();
 
         var user = await context.ApplicationUsers.FirstOrDefaultAsync(user =>
             user.UserName == loginRequest.UserName)!;
@@ -38,13 +30,17 @@ public class AuthController : ControllerBase
 
         var token = GenerateJwtToken(user);
 
-        return Ok(new { token });
+        return Ok(new AuthResponse
+        {
+            Token = token,
+            User = user
+        });
     }
 
 
     private string GenerateJwtToken(ApplicationUser user)
     {
-        var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!);
+        var key = Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!);
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),

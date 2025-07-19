@@ -3,10 +3,12 @@ using BackendTracker.Context;
 using BackendTracker.Entities.Message;
 using BackendTracker.Graphql;
 using BackendTracker.GraphQueries;
+using BackendTracker.Ticket;
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Environment = System.Environment;
 
 namespace BackendTracker;
 
@@ -28,6 +30,7 @@ public class Program
             .AddType<Message>()
             .AddType<Conversation>();
 
+        builder.Services.AddScoped<TicketService>();
         builder.Services.AddScoped<Mutation>();
         builder.Services.AddScoped<Query>();
 

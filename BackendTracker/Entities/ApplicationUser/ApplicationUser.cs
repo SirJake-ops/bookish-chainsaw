@@ -24,6 +24,10 @@ public class ApplicationUser : BaseEntity
 
     public List<Conversation> Conversations { get; set; }
 
+    public ICollection<Ticket.Ticket> SubmittedTickets { get; set; } = new List<Ticket.Ticket>();
+    public ICollection<Ticket.Ticket> AssignedTickets { get; set; } = new List<Ticket.Ticket>();
+
+
     public string? Token { get; set; }
     public string? RefreshToken { get; set; }
     public DateTime RefreshTokenExpiryTime { get; set; }
