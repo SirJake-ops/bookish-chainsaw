@@ -14,4 +14,5 @@ public class TicketRequestBody
 
     public required string ExpectedResult { get; set; } = string.Empty;
     public required List<TicketFile> Files { get; set; } = new();
+    public bool IsResolved { get; set; }
 }

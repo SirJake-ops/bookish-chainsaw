@@ -51,7 +51,7 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
     [Fact]
     public async Task GetTickets_ShouldReturnTicketsForSubmitter()
     {
-        _client.DefaultRequestHeaders.Authorization =
+                _client.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
         var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
@@ -63,7 +63,7 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
 
         var tickets = await response.Content.ReadFromJsonAsync<List<BackendTracker.Ticket.Ticket>>();
 
-        Assert.NotNull(tickets);
+        Assert.NotEmpty(tickets);
     }
 
     [Fact]
@@ -80,7 +80,8 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
             StepsToReproduce = "1. Do this\n2. Do that",
             ExpectedResult = "Expected outcome",
             SubmitterId = _user.Id,
-            Files = new List<TicketFile>()
+            Files = new List<TicketFile>(),
+            IsResolved = false
         } );
 
         var body = response.Content.ReadAsStringAsync().Result;

@@ -24,4 +24,5 @@ public class Ticket : BaseEntity
 
     public required string ExpectedResult { get; set; } = string.Empty;
     public required List<TicketFile> Files { get; set; } = new();
+    public required bool IsResolved { get; set; } = false;
 }

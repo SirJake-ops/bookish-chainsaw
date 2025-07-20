@@ -66,6 +66,7 @@ public class BackendTrackerFactory<TStartup> : WebApplicationFactory<TStartup> w
             Files = new List<TicketFile>(),
             Submitter = user,
             Assignee = user,
+            IsResolved = false
         };
 
         user.AssignedTickets.Add(ticket);

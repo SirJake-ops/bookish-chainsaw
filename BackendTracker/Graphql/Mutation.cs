@@ -13,7 +13,8 @@ public class Mutation(IDbContextFactory<ApplicationContext> dbContextFactory)
         await using var context = await dbContextFactory.CreateDbContextAsync();
         try
         {
-            var hasher = new PasswordHasher<ApplicationUser?>();
+            var hasher = new PasswordHasher<ApplicationUser>();
+
             var applicationUser = new ApplicationUser
             {
                 Id = Guid.NewGuid(),

@@ -10,4 +10,5 @@ public class TicketResponse
     public string Environment { get; set; } = string.Empty;
     public Guid SubmitterId { get; set; }
     public DateTime CreatedAt { get; set; }
+    public bool IsResolved { get; set;}
 }
