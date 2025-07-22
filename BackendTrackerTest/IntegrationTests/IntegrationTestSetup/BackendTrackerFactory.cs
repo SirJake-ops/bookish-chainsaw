@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Environment = BackendTracker.Ticket.Environment;
+using Environment = BackendTracker.Ticket.Enums.Environment;
 
 namespace BackendTrackerTest.IntegrationTests.IntegrationTestSetup;
 

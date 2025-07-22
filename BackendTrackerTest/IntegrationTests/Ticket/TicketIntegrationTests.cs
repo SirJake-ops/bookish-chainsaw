@@ -5,8 +5,9 @@ using BackendTracker;
 using BackendTracker.Auth;
 using BackendTracker.Context;
 using BackendTracker.Entities.ApplicationUser;
-using BackendTracker.Ticket;
 using BackendTracker.Ticket.FileUpload;
+using BackendTracker.Ticket.NewFolder;
+using BackendTracker.Ticket.PayloadAndResponse;
 using BackendTrackerTest.IntegrationTests.IntegrationTestSetup;
 using GraphQL;
 using HotChocolate.Types;
@@ -15,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 using Xunit.Sdk;
-using Environment = BackendTracker.Ticket.Environment;
+using Environment = BackendTracker.Ticket.Enums.Environment;
 
 namespace BackendTrackerTest.IntegrationTests.Ticket;
 
@@ -146,5 +147,39 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
         var updatedTickets = await verifyResponse.Content.ReadFromJsonAsync<List<BackendTracker.Ticket.Ticket>>();
 
         Assert.Contains(updatedTickets, t => t.TicketId == ticketToUpdate && t.Title == updatedTitle);
+    }
+
+    [Fact]
+    public async void AssignTicketToUser_ShouldAssignTicketToUser()
+    {
+        _client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+
+        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTracker.Ticket.Ticket>>();
+
+        Guid ticketIdToAssign = tickets!.First().TicketId;
+
+        var userToAssign = new UserTicketAssignDto
+        {
+            UserId = _user.Id 
+        };
+
+        var assignResponse = await _client.PostAsJsonAsync($"/api/tickets/{ticketIdToAssign}", userToAssign);
+        assignResponse.EnsureSuccessStatusCode();
+
+        var assignedTicket = await assignResponse.Content.ReadFromJsonAsync<TicketResponse>();
+
+        var db = await factory.Services.GetRequiredService<IDbContextFactory<ApplicationContext>>().CreateDbContextAsync();
+
+        var updatedUser = await db.ApplicationUsers
+            .Include(u => u.AssignedTickets)
+            .FirstOrDefaultAsync(u => u.Id == _user.Id);
+
+
+        Assert.Equal(1, updatedUser!.AssignedTickets.Count);
+        Assert.NotNull(assignedTicket);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }

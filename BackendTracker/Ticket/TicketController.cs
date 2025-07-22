@@ -1,4 +1,7 @@
-﻿using EntityGraphQL.Schema;
+﻿using BackendTracker.Entities.ApplicationUser;
+using BackendTracker.Ticket.NewFolder;
+using BackendTracker.Ticket.PayloadAndResponse;
+using EntityGraphQL.Schema;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,5 +45,13 @@ public class TicketController(TicketService ticketService) : Controller
     {
         await ticketService.DeleteTicket(ticketId);
         return NoContent();
+    }
+
+    [HttpPost("{ticketId}")]
+    [Authorize]
+    public async Task<ActionResult> AssignTicketToUser([FromBody] UserTicketAssignDto userDto, Guid ticketId)
+    {
+        var ticketResponse = await ticketService.AssignTicketToUser(userDto.UserId, ticketId);
+        return Ok(ticketResponse);
     }
 }

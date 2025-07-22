@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using BackendTracker.Entities;
 using BackendTracker.Entities.ApplicationUser;
+using BackendTracker.Ticket.Enums;
 using BackendTracker.Ticket.FileUpload;
 using Microsoft.EntityFrameworkCore;
+using Environment = BackendTracker.Ticket.Enums.Environment;
 
 namespace BackendTracker.Ticket;
 

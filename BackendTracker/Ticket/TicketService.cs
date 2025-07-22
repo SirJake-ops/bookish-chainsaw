@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using BackendTracker.Context;
 using BackendTracker.Entities.ApplicationUser;
+using BackendTracker.Ticket.NewFolder;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,7 @@ public class TicketService(IDbContextFactory<ApplicationContext> context)
                 Submitter = submitter,
                 Assignee = null,
                 Files = ticketBody.Files,
-                IsResolved = ticketBody.IsResolved
+                IsResolved = false
             };
 
             methodContext.Tickets.Add(ticket);
@@ -234,5 +235,41 @@ public class TicketService(IDbContextFactory<ApplicationContext> context)
         }
 
         return Convert.ChangeType(value, underlyingType);
+    }
+
+    public async Task<Result<Object>> AssignTicketToUser(Guid userId, Guid ticketId)
+    {
+        var methodContext = await context.CreateDbContextAsync();
+
+        try
+        {
+            var ticketToAssign = await methodContext.Tickets.FirstOrDefaultAsync(m => m.TicketId == ticketId) ??
+                                 throw new Exception("Ticket not found.");
+
+            bool userExists = await methodContext.ApplicationUsers.AnyAsync(u => u.Id == userId);
+
+            if (!userExists)
+            {
+                throw new Exception("User to assign does not exist.");
+            }
+
+            var userToAssign = await methodContext.ApplicationUsers
+                .Include(u => u.AssignedTickets)
+                .FirstOrDefaultAsync(u => u.Id == userId) ?? throw new Exception("User not found.");
+
+            ticketToAssign.AssigneeId = userId;
+            userToAssign.AssignedTickets.Add(ticketToAssign);
+            await methodContext.SaveChangesAsync();
+            await methodContext.Entry(userToAssign).Collection(u => u.AssignedTickets).LoadAsync();
+
+            return new OkObjectResult(new
+            {
+                message = "Ticket assigned successfully."
+            });
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("An error occurred while assigning the ticket to the user.", ex);
+        }
     }
 }

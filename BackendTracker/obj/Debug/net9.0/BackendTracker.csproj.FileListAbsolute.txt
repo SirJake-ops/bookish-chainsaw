@@ -490,3 +490,6 @@ C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\Micr
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\Newtonsoft.Json.dll
 C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\Newtonsoft.Json.Bson.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\BouncyCastle.Cryptography.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\MailKit.dll
+C:\Users\jake2\RiderProjects\BackendTracker\BackendTracker\bin\Debug\net9.0\MimeKit.dll
