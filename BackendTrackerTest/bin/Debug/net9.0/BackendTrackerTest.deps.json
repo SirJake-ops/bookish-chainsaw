@@ -40,6 +40,7 @@
           "BackendTracker": "1.0.0",
           "EntityGraphQL": "5.5.3",
           "GraphQL": "8.2.1",
+          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "9.0.7",
           "Microsoft.NET.Test.Sdk": "17.11.1",
           "coverlet.collector": "6.0.2",
           "xunit": "2.9.2",
@@ -131,7 +132,7 @@
           "Microsoft.AspNetCore.StaticFiles": "9.0.0.0",
           "Microsoft.AspNetCore.WebSockets": "9.0.0.0",
           "Microsoft.AspNetCore.WebUtilities": "9.0.0.0",
-          "Microsoft.CSharp": "9.0.0.0",
+          "Microsoft.CSharp.Reference": "9.0.0.0",
           "Microsoft.Extensions.Configuration.Ini": "9.0.0.0",
           "Microsoft.Extensions.Configuration.KeyPerFile": "9.0.0.0",
           "Microsoft.Extensions.Configuration.Xml": "9.0.0.0",
@@ -1014,6 +1015,37 @@
           "lib/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll": {}
         }
       },
+      "Microsoft.AspNetCore.JsonPatch/9.0.7": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.AspNetCore.JsonPatch.dll": {
+            "assemblyVersion": "9.0.7.0",
+            "fileVersion": "9.0.725.31702"
+          }
+        },
+        "compile": {
+          "lib/net9.0/Microsoft.AspNetCore.JsonPatch.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Mvc.NewtonsoftJson/9.0.7": {
+        "dependencies": {
+          "Microsoft.AspNetCore.JsonPatch": "9.0.7",
+          "Newtonsoft.Json": "13.0.3",
+          "Newtonsoft.Json.Bson": "1.0.2"
+        },
+        "runtime": {
+          "lib/net9.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll": {
+            "assemblyVersion": "9.0.7.0",
+            "fileVersion": "9.0.725.31702"
+          }
+        },
+        "compile": {
+          "lib/net9.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Mvc.Testing/9.0.7": {
         "dependencies": {
           "Microsoft.AspNetCore.TestHost": "9.0.7",
@@ -1052,6 +1084,7 @@
           "lib/netcoreapp3.1/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {}
         }
       },
+      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.EntityFrameworkCore/9.0.7": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "9.0.7",
@@ -1802,7 +1835,7 @@
       "Microsoft.TestPlatform.TestHost/17.11.1": {
         "dependencies": {
           "Microsoft.TestPlatform.ObjectModel": "17.11.1",
-          "Newtonsoft.Json": "13.0.1"
+          "Newtonsoft.Json": "13.0.3"
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.TestPlatform.CommunicationUtilities.dll": {
@@ -2011,15 +2044,29 @@
           "System.Xml.XDocument": "4.3.0"
         }
       },
-      "Newtonsoft.Json/13.0.1": {
+      "Newtonsoft.Json/13.0.3": {
         "runtime": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "13.0.0.0",
-            "fileVersion": "13.0.1.25517"
+            "fileVersion": "13.0.3.27908"
           }
         },
         "compile": {
-          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+          "lib/net6.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Newtonsoft.Json.Bson/1.0.2": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.Bson.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.2.22727"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.Bson.dll": {}
         }
       },
       "Npgsql/9.0.2": {
@@ -2880,6 +2927,7 @@
           "HotChocolate.Data": "15.1.7",
           "HotChocolate.Data.EntityFramework": "15.1.7",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.7",
+          "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "9.0.7",
           "Microsoft.AspNetCore.Mvc.Testing": "9.0.7",
           "Microsoft.EntityFrameworkCore": "9.0.7",
           "Microsoft.EntityFrameworkCore.InMemory": "9.0.7",
@@ -3418,7 +3466,7 @@
         },
         "compileOnly": true
       },
-      "Microsoft.CSharp/9.0.0.0": {
+      "Microsoft.CSharp.Reference/9.0.0.0": {
         "compile": {
           "Microsoft.CSharp.dll": {}
         },
@@ -4865,6 +4913,20 @@
       "path": "microsoft.aspnetcore.authentication.jwtbearer/9.0.7",
       "hashPath": "microsoft.aspnetcore.authentication.jwtbearer.9.0.7.nupkg.sha512"
     },
+    "Microsoft.AspNetCore.JsonPatch/9.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PuLs0aRd1nongsGB4sDcG1bz3H5L6UM2fpXh3mKqkaKF0NStcetA3iC5Ru4CPn7TJGfgBTQsVTHZo9CgDaCkVw==",
+      "path": "microsoft.aspnetcore.jsonpatch/9.0.7",
+      "hashPath": "microsoft.aspnetcore.jsonpatch.9.0.7.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Mvc.NewtonsoftJson/9.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-5j7v42D8bu0JuAo8wzF6E/R8sil1C5EQ/REyrL7GQi8cg3CyuVq4bU8/AoYQ/BE8yqgM/ZYgeEOAjECa7jzpSA==",
+      "path": "microsoft.aspnetcore.mvc.newtonsoftjson/9.0.7",
+      "hashPath": "microsoft.aspnetcore.mvc.newtonsoftjson.9.0.7.nupkg.sha512"
+    },
     "Microsoft.AspNetCore.Mvc.Testing/9.0.7": {
       "type": "package",
       "serviceable": true,
@@ -4885,6 +4947,13 @@
       "sha512": "sha512-nPJqrcA5iX+Y0kqoT3a+pD/8lrW/V7ayqnEJQsTonSoPz59J8bmoQhcSN4G8+UJ64Hkuf0zuxnfuj2lkHOq4cA==",
       "path": "microsoft.codecoverage/17.11.1",
       "hashPath": "microsoft.codecoverage.17.11.1.nupkg.sha512"
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore/9.0.7": {
       "type": "package",
@@ -5229,12 +5298,19 @@
       "path": "netstandard.library/1.6.1",
       "hashPath": "netstandard.library.1.6.1.nupkg.sha512"
     },
-    "Newtonsoft.Json/13.0.1": {
+    "Newtonsoft.Json/13.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
-      "path": "newtonsoft.json/13.0.1",
-      "hashPath": "newtonsoft.json.13.0.1.nupkg.sha512"
+      "sha512": "sha512-HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "path": "newtonsoft.json/13.0.3",
+      "hashPath": "newtonsoft.json.13.0.3.nupkg.sha512"
+    },
+    "Newtonsoft.Json.Bson/1.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-QYFyxhaABwmq3p/21VrZNYvCg3DaEoN/wUuw5nmfAf0X3HLjgupwhkEWdgfb9nvGAUIv3osmZoD3kKl4jxEmYQ==",
+      "path": "newtonsoft.json.bson/1.0.2",
+      "hashPath": "newtonsoft.json.bson.1.0.2.nupkg.sha512"
     },
     "Npgsql/9.0.2": {
       "type": "package",
@@ -6313,7 +6389,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "Microsoft.CSharp/9.0.0.0": {
+    "Microsoft.CSharp.Reference/9.0.0.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using BackendTracker;
 using BackendTracker.Auth;
@@ -8,9 +9,12 @@ using BackendTracker.Ticket;
 using BackendTracker.Ticket.FileUpload;
 using BackendTrackerTest.IntegrationTests.IntegrationTestSetup;
 using GraphQL;
+using HotChocolate.Types;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 using Environment = BackendTracker.Ticket.Environment;
 
 namespace BackendTrackerTest.IntegrationTests.Ticket;
@@ -49,9 +53,9 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
     public Task DisposeAsync() => Task.CompletedTask;
 
     [Fact]
-    public async Task GetTickets_ShouldReturnTicketsForSubmitter()
+    public async void GetTickets_ShouldReturnTicketsForSubmitter()
     {
-                _client.DefaultRequestHeaders.Authorization =
+        _client.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
         var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
@@ -67,12 +71,12 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
     }
 
     [Fact]
-    public async Task CreateTicket_ShouldCreateAndReturnATicketResponse()
+    public async void CreateTicket_ShouldCreateAndReturnATicketResponse()
     {
         _client.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
 
-        var response = await _client.PostAsJsonAsync("/api/tickets", new TicketRequestBody 
+        var response = await _client.PostAsJsonAsync("/api/tickets", new TicketRequestBody
         {
             Environment = Environment.Device,
             Title = "Test Ticket",
@@ -82,15 +86,65 @@ public class TicketIntegrationTests(BackendTrackerFactory<Program> factory, ITes
             SubmitterId = _user.Id,
             Files = new List<TicketFile>(),
             IsResolved = false
-        } );
+        });
 
         var body = response.Content.ReadAsStringAsync().Result;
         testOutputHelper.WriteLine(body);
 
         var ticket = await response.Content.ReadFromJsonAsync<TicketResponse>();
-        
+
         Assert.NotNull(ticket);
         Assert.Equal(ticket.Title, "Test Ticket");
         Assert.Equal(ticket.SubmitterId, _user.Id);
+    }
+
+
+    [Fact]
+    public async void DeleteTicket_ShouldBeAbleToDelete()
+    {
+        _client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+
+        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+
+        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTracker.Ticket.Ticket>>();
+        Guid ticketIdToDelete = tickets.FirstOrDefault().TicketId;
+
+
+        var ticketDeleteResponse = await _client.DeleteAsync($"/api/tickets/{ticketIdToDelete}");
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async void UpdateTicketProp_ShouldPatchSingleProperty()
+    {
+        _client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _token);
+
+
+        var response = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+
+        var tickets = await response.Content.ReadFromJsonAsync<List<BackendTracker.Ticket.Ticket>>();
+        Guid ticketToUpdate = tickets!.First().TicketId;
+
+        var updatedTitle = "Updated Ticket Title";
+
+        Dictionary<string, object> updatePayload = new Dictionary<string, object>
+        {
+            {
+                "Title", updatedTitle
+            }
+        };
+
+        var patchResponse = await _client.PatchAsJsonAsync($"/api/tickets/{ticketToUpdate}", updatePayload);
+
+        patchResponse.EnsureSuccessStatusCode();
+
+        var verifyResponse = await _client.GetAsync($"/api/tickets?submitterId={_user.Id}");
+        var updatedTickets = await verifyResponse.Content.ReadFromJsonAsync<List<BackendTracker.Ticket.Ticket>>();
+
+        Assert.Contains(updatedTickets, t => t.TicketId == ticketToUpdate && t.Title == updatedTitle);
     }
 }

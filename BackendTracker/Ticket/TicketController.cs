@@ -29,14 +29,14 @@ public class TicketController(TicketService ticketService) : Controller
         return await ticketService.UpdateTicket(ticketBody);
     }
 
-    [HttpPatch]
+    [HttpPatch("{ticketId}")]
     [Authorize]
-    public async Task<TicketResponse> UpdateTicketProp([FromBody] Dictionary<string, AnyType> propertyToUpdate)
+    public async Task<TicketResponse> UpdateTicketProp([FromBody] Dictionary<string, object> propertyToUpdate, Guid ticketId)
     {
-        throw new NotImplementedException("This is gonna be interesting to accomplish");
+        return await ticketService.UpdateTicketProp(propertyToUpdate, ticketId);
     }
 
-    [HttpDelete]
+    [HttpDelete("{ticketId}")]
     [Authorize]
     public async Task<ActionResult> DeleteTicket([FromQuery] Guid ticketId)
     {

@@ -48,7 +48,9 @@ public class Program
             });
 
         builder.Services.AddControllers();
+        builder.Services.AddControllers().AddNewtonsoftJson();
         builder.Services.AddAuthorization();
+        
 
         var app = builder.Build();
 
